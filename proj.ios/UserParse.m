@@ -10,9 +10,12 @@
 
 - (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo
 {
-    [Parse setApplicationId:[cpInfo objectForKey:@"ApplicationID"]
-                  clientKey:[cpInfo objectForKey:@"ClientKey"]];
-    [PFTwitterUtils initializeWithConsumerKey:[cpInfo objectForKey:@"TwitterConsumerKey"] consumerSecret:[cpInfo objectForKey:@"TwitterConsumerSecret"]];
+    [Parse setApplicationId:cpInfo[@"ApplicationID"] clientKey:cpInfo[@"ClientKey"]];
+    NSString* twitterConsumerKey = cpInfo[@"TwitterConsumerKey"];
+    NSString* twitterConsumerSecret = cpInfo[@"TwitterConsumerSecret"];
+    if (twitterConsumerKey != nil && twitterConsumerSecret != nil) {
+        [PFTwitterUtils initializeWithConsumerKey:twitterConsumerKey consumerSecret:twitterConsumerSecret];
+    }
 }
 
 - (void) login
@@ -27,9 +30,9 @@
 {
 }
 
-- (BOOL) isLogined
+- (NSNumber*) isLogined
 {
-    return [PFUser currentUser] != nil;
+    return [PFUser currentUser] == nil ? @0 : @1;
 }
 
 - (NSString*) getSessionID
@@ -68,6 +71,26 @@
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController
 {
     [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:@"cancel"];
+}
+
+- (void)enableAutomaticUser
+{
+    [PFUser enableAutomaticUser];
+}
+
+- (void)saveUserAttr:(NSMutableDictionary*)attrs
+{
+    NSNumber* runCount = attrs[@"Param1"];
+    NSNumber* cupCount = attrs[@"Param2"];
+    PFUser* user = [PFUser currentUser];
+    user[@"runCount"] = runCount;
+    user[@"cupCount"] = cupCount;
+    [user saveInBackground];
+}
+
+- (NSNumber*)getUserAttr:(NSString*)attrName
+{
+    return [PFUser currentUser][attrName];
 }
 
 - (NSString*)twitterApi:(NSMutableDictionary*)params

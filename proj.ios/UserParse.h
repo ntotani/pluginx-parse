@@ -14,7 +14,7 @@
 - (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
 - (void) login;
 - (void) logout;
-- (BOOL) isLogined;
+- (NSNumber*) isLogined;
 - (NSString*) getSessionID;
 - (void) setDebugMode: (BOOL) debug;
 - (NSString*) getSDKVersion;
@@ -24,6 +24,9 @@
 - (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error;
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController;
 
+- (void)enableAutomaticUser;
+- (void)saveUserAttr:(NSMutableDictionary*)attrs;
+- (NSNumber*)getUserAttr:(NSString*)attrName;
 - (NSString*)twitterApi:(NSMutableDictionary*)params;
 
 @end
