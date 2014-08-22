@@ -76,6 +76,9 @@
 - (void)enableAutomaticUser
 {
     [PFUser enableAutomaticUser];
+    PFACL *defaultACL = [PFACL ACL];
+    [defaultACL setPublicReadAccess:YES];
+    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
 }
 
 - (void)saveUserAttr:(NSMutableDictionary*)attrs
