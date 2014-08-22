@@ -107,7 +107,7 @@
             [rank addObject:@{@"name":e[@"username"], @"score":e[col]}];
         }
         NSString* json = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:rank options:kNilOptions error:nil] encoding:NSUTF8StringEncoding];
-        OUTPUT_LOG(@"%@", json);
+        [UserWrapper onActionResult:self withRet:kLogoutSucceed withMsg:json];
     }];
 }
 
