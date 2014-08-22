@@ -84,9 +84,11 @@
 - (void)saveUserAttr:(NSMutableDictionary*)attrs
 {
     NSNumber* runCount = attrs[@"Param1"];
-    NSNumber* cupCount = attrs[@"Param2"];
+    NSNumber* goalCount = attrs[@"Param2"];
+    NSNumber* cupCount = attrs[@"Param3"];
     PFUser* user = [PFUser currentUser];
     user[@"runCount"] = runCount;
+    user[@"goalCount"] = goalCount;
     user[@"cupCount"] = cupCount;
     [user saveInBackground];
 }
