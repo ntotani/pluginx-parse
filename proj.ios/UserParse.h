@@ -27,6 +27,7 @@
 - (void)enableAutomaticUser;
 - (void)saveUserAttr:(NSMutableDictionary*)attrs;
 - (NSNumber*)getUserAttr:(NSString*)attrName;
+- (void)fetchScoreRank:(NSString*)col;
 - (NSString*)twitterApi:(NSMutableDictionary*)params;
 
 @end

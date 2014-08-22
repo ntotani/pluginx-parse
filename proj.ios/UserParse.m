@@ -96,6 +96,21 @@
     return [PFUser currentUser][attrName];
 }
 
+- (void)fetchScoreRank:(NSString*)col
+{
+    PFQuery *query = [PFUser query];
+    query.limit = 100;
+    [query orderByDescending:col];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        NSMutableArray *rank = [@[] mutableCopy];
+        for (PFObject *e in objects) {
+            [rank addObject:@{@"name":e[@"username"], @"score":e[col]}];
+        }
+        NSString* json = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:rank options:kNilOptions error:nil] encoding:NSUTF8StringEncoding];
+        OUTPUT_LOG(@"%@", json);
+    }];
+}
+
 - (NSString*)twitterApi:(NSMutableDictionary*)params
 {
     NSString* api = params[@"Param1"];
