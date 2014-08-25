@@ -113,6 +113,18 @@
     }];
 }
 
+- (void)fetchUserRank:(NSString *)col
+{
+    PFQuery* query = [PFUser query];
+    NSNumber* myScore = [self getUserAttr:col];
+    myScore = myScore ? myScore : @0;
+    [query whereKey:col greaterThan:myScore];
+    [query countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+        NSString* json = [NSString stringWithFormat:@"{\"rank\":%d}", number + 1];
+        [UserWrapper onActionResult:self withRet:kLogoutSucceed withMsg:json];
+    }];
+}
+
 - (NSString*)twitterApi:(NSMutableDictionary*)params
 {
     NSString* api = params[@"Param1"];
