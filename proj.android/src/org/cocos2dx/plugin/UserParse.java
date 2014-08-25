@@ -120,21 +120,10 @@ public class UserParse implements InterfaceUser {
         }
     }
 
-    /*
-    public void saveUserAttr(int runCount, int goalCount, int cupCount) {
-        ParseUser user = ParseUser.getCurrentUser();
-        user.put("runCount", runCount);
-        user.put("goalCount", goalCount);
-        user.put("cupCount", cupCount);
-        user.saveInBackground();
-    }
-    */
-
     public int getUserAttr(String attr) {
         return Integer.parseInt(ParseUser.getCurrentUser().get(attr).toString());
     }
 
-    /*
     public void fetchUserRank(String col) {
         final InterfaceUser that = this;
         ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -173,6 +162,5 @@ public class UserParse implements InterfaceUser {
             }
         });
     }
-    */
 
 }
