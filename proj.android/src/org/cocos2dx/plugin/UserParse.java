@@ -3,6 +3,7 @@ package org.cocos2dx.plugin;
 import java.util.Hashtable;
 import java.util.List;
 
+import org.json.JSONObject;
 import org.json.JSONArray;
 
 import android.app.Activity;
@@ -107,15 +108,19 @@ public class UserParse implements InterfaceUser {
         ParseUser.enableAutomaticUser();
     }
 
-    /*
-    public void saveUserAttr(Hashtable<String, String> devInfo) {
-        ParseUser user = ParseUser.getCurrentUser();
-        user.put("runCount", Integer.parseInt(devInfo.get("Param1")));
-        user.put("goalCount", Integer.parseInt(devInfo.get("Param2")));
-        user.put("cupCount", Integer.parseInt(devInfo.get("Param3")));
-        user.saveInBackground();
+    public void saveUserAttr(JSONObject args) {
+        try {
+            ParseUser user = ParseUser.getCurrentUser();
+            user.put("runCount", Integer.parseInt(args.getString("Param1")));
+            user.put("goalCount", Integer.parseInt(args.getString("Param2")));
+            user.put("cupCount", Integer.parseInt(args.getString("Param3")));
+            user.saveInBackground();
+        } catch(org.json.JSONException e) {
+            LogE("Exception in saveUserAttr", e);
+        }
     }
-    */
+
+    /*
     public void saveUserAttr(int runCount, int goalCount, int cupCount) {
         ParseUser user = ParseUser.getCurrentUser();
         user.put("runCount", runCount);
@@ -123,6 +128,7 @@ public class UserParse implements InterfaceUser {
         user.put("cupCount", cupCount);
         user.saveInBackground();
     }
+    */
 
     public int getUserAttr(String attr) {
         return Integer.parseInt(ParseUser.getCurrentUser().get(attr).toString());
