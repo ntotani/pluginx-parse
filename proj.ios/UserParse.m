@@ -106,7 +106,7 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         NSMutableArray *rank = [@[] mutableCopy];
         for (PFObject *e in objects) {
-            [rank addObject:@{@"name":e[@"username"], @"score":e[col]}];
+            [rank addObject:e[col]];
         }
         NSString* json = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:rank options:kNilOptions error:nil] encoding:NSUTF8StringEncoding];
         [UserWrapper onActionResult:self withRet:kLogoutSucceed withMsg:json];
